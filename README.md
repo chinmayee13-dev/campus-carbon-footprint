@@ -1,4 +1,4 @@
-# 🌿 Campus Carbon Management Agent
+#  Campus Carbon Footprint Calculator
 
 An AI-powered, autonomous carbon accounting, analytics, and reduction planning system tailored for college and university campus administrators.
 
@@ -6,20 +6,20 @@ The system goes far beyond a static carbon calculator: the AI agent understands 
 
 ---
 
-## 🌟 Core Features
+##  Core Features
 
-- 🤖 **Autonomous AI Tool Calling**: The agent determines and executes real backend Python tools (`calculate_electricity_emissions`, `calculate_transport_emissions`, `calculate_waste_emissions`, `calculate_total_footprint`, `get_historical_data`, `generate_reduction_plan`, `simulate_reduction`).
-- 🧮 **Deterministic Calculation Integrity**: Carbon math is never left to LLM hallucination. Pure deterministic formulas convert activity data using validated emission factors from US EPA eGRID, UK DEFRA, and GHG Protocol.
-- 🛡️ **Zero-Crash Fallback Mode**: Works completely offline or without an API key. If no LLM key is configured, an intelligent semantic intent classifier triggers the identical real Python tools and provides structured analysis.
-- 📊 **Executive Administrator Dashboard**:
+-  **Autonomous AI Tool Calling**: The agent determines and executes real backend Python tools (`calculate_electricity_emissions`, `calculate_transport_emissions`, `calculate_waste_emissions`, `calculate_total_footprint`, `get_historical_data`, `generate_reduction_plan`, `simulate_reduction`).
+-  **Deterministic Calculation Integrity**: Carbon math is never left to LLM hallucination. Pure deterministic formulas convert activity data using validated emission factors from US EPA eGRID, UK DEFRA, and GHG Protocol.
+-  **Zero-Crash Fallback Mode**: Works completely offline or without an API key. If no LLM key is configured, an intelligent semantic intent classifier triggers the identical real Python tools and provides structured analysis.
+-  **Executive Administrator Dashboard**:
   - Current vs. Previous Month CO₂e & Month-over-Month % delta.
   - Largest emission source detection and scope percentage breakdowns.
   - 6-month historical stacked scope emissions trajectory chart (Chart.js).
   - Category share doughnut chart.
   - Prioritized sustainability interventions with estimated impact and timelines.
-- 🔬 **What-If Scenario Sandbox**: Interactive simulation sliders allowing administrators to model reductions (e.g. *-20% electricity*, *-15% commuter traffic*) and view real-time avoided greenhouse gas calculations.
-- 📝 **Monthly Activity Logger**: Easy modal form to log monthly kWh, commuter cars/motorcycles, shuttle diesel, and waste weights with instant live calculations before saving to SQLite.
-- 📜 **Official Conversion Factors Reference**: Complete transparency into emission factors, regulatory units, and citations.
+-  **What-If Scenario Sandbox**: Interactive simulation sliders allowing administrators to model reductions (e.g. *-20% electricity*, *-15% commuter traffic*) and view real-time avoided greenhouse gas calculations.
+-  **Monthly Activity Logger**: Easy modal form to log monthly kWh, commuter cars/motorcycles, shuttle diesel, and waste weights with instant live calculations before saving to SQLite.
+-  **Official Conversion Factors Reference**: Complete transparency into emission factors, regulatory units, and citations.
 
 ---
 
@@ -67,11 +67,6 @@ campus-carbon-agent/
 ├── .env.example                 # Environment configuration template
 ├── requirements.txt             # Python dependencies
 └── README.md                    # Documentation & setup guide
-```
-
----
-
-## 🚀 Quickstart Guide
 
 ### Prerequisites
 - **Python 3.10+** (Tested on Python 3.13)
@@ -129,7 +124,7 @@ The database `campus_carbon.db` will automatically initialize and pre-populate w
 
 ---
 
-## 🛠️ The 7 Agent Tools
+##  The 7 Agent Tools
 
 | Tool Name | Parameters | Description |
 | :--- | :--- | :--- |
@@ -143,7 +138,7 @@ The database `campus_carbon.db` will automatically initialize and pre-populate w
 
 ---
 
-## 💬 Sample Inquiries to Ask the Agent
+##  Sample Inquiries to Ask the Agent
 
 Try asking the agent in the **Carbon Agent** chat interface:
 
@@ -162,7 +157,7 @@ Try asking the agent in the **Carbon Agent** chat interface:
 
 ---
 
-## ⚖️ Emission Factors Reference
+##  Emission Factors Reference
 
 All calculations use verified baseline coefficients:
 
@@ -180,7 +175,7 @@ All calculations use verified baseline coefficients:
 
 ---
 
-## 🧪 Running Verification Tests
+##  Running Verification Tests
 
 Run the included automated test suite to verify tool accuracy and deterministic calculations:
 ```bash
@@ -189,7 +184,7 @@ py test_backend.py
 
 ---
 
-## 🚢 Production Deployment
+## 🚢Production Deployment
 
 To run in a production environment:
 
