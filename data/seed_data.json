@@ -1,0 +1,74 @@
+[
+  {
+    "month": "2025-10",
+    "electricity_kwh": 48500,
+    "cars": 210,
+    "car_distance": 22.5,
+    "motorcycles": 42,
+    "motorcycle_distance": 14.0,
+    "bus_fuel": 680,
+    "organic_waste": 2100,
+    "plastic_waste": 580,
+    "paper_waste": 920
+  },
+  {
+    "month": "2025-11",
+    "electricity_kwh": 51200,
+    "cars": 225,
+    "car_distance": 23.0,
+    "motorcycles": 38,
+    "motorcycle_distance": 13.5,
+    "bus_fuel": 720,
+    "organic_waste": 2250,
+    "plastic_waste": 610,
+    "paper_waste": 960
+  },
+  {
+    "month": "2025-12",
+    "electricity_kwh": 43800,
+    "cars": 170,
+    "car_distance": 20.0,
+    "motorcycles": 25,
+    "motorcycle_distance": 11.0,
+    "bus_fuel": 510,
+    "organic_waste": 1500,
+    "plastic_waste": 420,
+    "paper_waste": 680
+  },
+  {
+    "month": "2026-01",
+    "electricity_kwh": 57600,
+    "cars": 230,
+    "car_distance": 24.0,
+    "motorcycles": 32,
+    "motorcycle_distance": 12.0,
+    "bus_fuel": 790,
+    "organic_waste": 2350,
+    "plastic_waste": 630,
+    "paper_waste": 980
+  },
+  {
+    "month": "2026-02",
+    "electricity_kwh": 55400,
+    "cars": 240,
+    "car_distance": 23.5,
+    "motorcycles": 40,
+    "motorcycle_distance": 13.0,
+    "bus_fuel": 760,
+    "organic_waste": 2280,
+    "plastic_waste": 640,
+    "paper_waste": 940
+  },
+  {
+    "month": "2026-03",
+    "electricity_kwh": 53100,
+    "cars": 235,
+    "car_distance": 22.0,
+    "motorcycles": 45,
+    "motorcycle_distance": 14.5,
+    "bus_fuel": 740,
+    "organic_waste": 2180,
+    "plastic_waste": 590,
+    "paper_waste": 890
+  }
+]

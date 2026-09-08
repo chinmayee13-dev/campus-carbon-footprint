@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Carbon Management Agent | AI Sustainability Intelligence</title>
+  <meta name="description" content="AI-powered carbon accounting and reduction agent for college campus administrators." />
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-layout">
+    
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+      <div class="nav-brand">
+        <div class="brand-logo">
+          <i data-lucide="leaf" class="logo-icon"></i>
+        </div>
+        <div class="brand-meta">
+          <h1 class="brand-title">Campus Carbon Agent</h1>
+          <span class="brand-subtitle">AI Sustainability Management & Analytics</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Agent Status Indicator -->
+        <div id="agent-status-badge" class="status-badge" title="AI Agent Status">
+          <span class="pulse-dot"></span>
+          <span id="agent-status-text">Checking Agent...</span>
+        </div>
+
+        <!-- Action Buttons -->
+        <button id="btn-open-factors" class="btn btn-secondary">
+          <i data-lucide="book-open"></i>
+          <span>Emission Factors</span>
+        </button>
+
+        <button id="btn-open-modal" class="btn btn-primary">
+          <i data-lucide="plus-circle"></i>
+          <span>Enter Campus Data</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="main-content">
+      
+      <!-- Top Alert Banner for Fallback or System Notices -->
+      <div id="system-banner" class="system-banner">
+        <div class="banner-icon"><i data-lucide="info"></i></div>
+        <div class="banner-content">
+          <strong id="banner-title">Campus Carbon Intelligence System Ready</strong>
+          <span id="banner-desc">Deterministic calculation engine connected. 6-month historical baseline loaded.</span>
+        </div>
+      </div>
+
+      <!-- Section: Executive KPI Cards -->
+      <section class="kpi-grid">
+        <!-- Current Footprint -->
+        <div class="card kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Current Monthly CO₂e</span>
+            <div class="kpi-icon-wrap emerald">
+              <i data-lucide="activity"></i>
+            </div>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpi-current-co2e" class="kpi-value">--</span>
+            <span class="kpi-unit">kg CO₂e</span>
+          </div>
+          <div class="kpi-footer">
+            <span id="kpi-current-month" class="badge-month">--</span>
+            <span id="kpi-mom-badge" class="badge-trend neutral">--</span>
+          </div>
+        </div>
+
+        <!-- Previous Footprint -->
+        <div class="card kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Previous Month's CO₂e</span>
+            <div class="kpi-icon-wrap teal">
+              <i data-lucide="calendar"></i>
+            </div>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpi-previous-co2e" class="kpi-value">--</span>
+            <span class="kpi-unit">kg CO₂e</span>
+          </div>
+          <div class="kpi-footer">
+            <span id="kpi-previous-month" class="badge-month">--</span>
+            <span class="kpi-subtext">Baseline comparison</span>
+          </div>
+        </div>
+
+        <!-- Month over Month Change -->
+        <div class="card kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">MoM Net Change</span>
+            <div class="kpi-icon-wrap indigo">
+              <i data-lucide="trending-up"></i>
+            </div>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpi-diff-co2e" class="kpi-value">--</span>
+            <span class="kpi-unit">kg CO₂e</span>
+          </div>
+          <div class="kpi-footer">
+            <span id="kpi-pct-change" class="badge-trend neutral">--%</span>
+            <span class="kpi-subtext">relative to last month</span>
+          </div>
+        </div>
+
+        <!-- Largest Emission Source -->
+        <div class="card kpi-card highlight-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Largest Emission Source</span>
+            <div class="kpi-icon-wrap amber">
+              <i data-lucide="alert-triangle"></i>
+            </div>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpi-largest-source" class="kpi-value highlight-text">--</span>
+          </div>
+          <div class="kpi-footer">
+            <span id="kpi-largest-share" class="badge-share">--% of total footprint</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Category Quick Stat Bars -->
+      <section class="category-summary-row">
+        <!-- Electricity Card -->
+        <div class="card cat-metric-card">
+          <div class="cat-metric-header">
+            <div class="cat-title-group">
+              <i data-lucide="zap" class="cat-icon elec"></i>
+              <span class="cat-name">Electricity</span>
+            </div>
+            <span id="cat-elec-val" class="cat-val">-- kg</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="cat-elec-bar" class="progress-bar-fill elec" style="width: 0%"></div>
+          </div>
+          <div class="cat-metric-footer">
+            <span id="cat-elec-pct">--%</span>
+            <span class="cat-detail">Scope 2 (Grid Power)</span>
+          </div>
+        </div>
+
+        <!-- Transportation Card -->
+        <div class="card cat-metric-card">
+          <div class="cat-metric-header">
+            <div class="cat-title-group">
+              <i data-lucide="car" class="cat-icon trans"></i>
+              <span class="cat-name">Transportation</span>
+            </div>
+            <span id="cat-trans-val" class="cat-val">-- kg</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="cat-trans-bar" class="progress-bar-fill trans" style="width: 0%"></div>
+          </div>
+          <div class="cat-metric-footer">
+            <span id="cat-trans-pct">--%</span>
+            <span class="cat-detail">Scope 1 & 3 (Commuting & Buses)</span>
+          </div>
+        </div>
+
+        <!-- Waste Card -->
+        <div class="card cat-metric-card">
+          <div class="cat-metric-header">
+            <div class="cat-title-group">
+              <i data-lucide="trash-2" class="cat-icon waste"></i>
+              <span class="cat-name">Waste</span>
+            </div>
+            <span id="cat-waste-val" class="cat-val">-- kg</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="cat-waste-bar" class="progress-bar-fill waste" style="width: 0%"></div>
+          </div>
+          <div class="cat-metric-footer">
+            <span id="cat-waste-pct">--%</span>
+            <span class="cat-detail">Scope 3 (Landfill & Disposal)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Split Analytics & Interactive Chat -->
+      <div class="dashboard-split-layout">
+        
+        <!-- Left Column: Visual Analytics & What-If Sandbox -->
+        <div class="analytics-column">
+          
+          <!-- Monthly Emissions Trend Chart -->
+          <div class="card chart-card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Campus Emissions Trajectory</h3>
+                <p class="card-subtitle">Historical stacked footprint by scope over the past months</p>
+              </div>
+              <span class="chart-badge">SQLite Stored</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="trendChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Category Share & What-If Sandbox -->
+          <div class="analytics-sub-grid">
+            
+            <!-- Category Share Breakdown Doughnut -->
+            <div class="card chart-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Category Breakdown</h3>
+                  <p class="card-subtitle">Share of current monthly CO₂e</p>
+                </div>
+              </div>
+              <div class="doughnut-wrapper">
+                <canvas id="breakdownChart"></canvas>
+                <div class="doughnut-center-text">
+                  <span id="doughnut-total-val">--</span>
+                  <span class="doughnut-total-label">Total kg</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- What-If Tool Scenario Sandbox -->
+            <div class="card sandbox-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">What-If Reduction Simulator</h3>
+                  <p class="card-subtitle">Model decarbonization targets in real-time</p>
+                </div>
+                <span class="tool-badge">Tool 7</span>
+              </div>
+
+              <div class="sandbox-controls">
+                <div class="form-group">
+                  <label for="sim-category">Target Category</label>
+                  <select id="sim-category" class="form-select">
+                    <option value="electricity">⚡ Electricity Consumption</option>
+                    <option value="transportation">🚗 Commuter & Bus Transportation</option>
+                    <option value="waste">🗑️ Campus Waste Generation</option>
+                    <option value="all">🌍 All Scope Categories Combined</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <div class="slider-label-row">
+                    <label for="sim-pct">Reduction Target</label>
+                    <span id="sim-pct-display" class="slider-val">20%</span>
+                  </div>
+                  <input type="range" id="sim-pct" class="range-slider" min="5" max="50" step="5" value="20" />
+                </div>
+
+                <!-- Simulation Output Box -->
+                <div class="sim-result-box">
+                  <div class="sim-stat">
+                    <span class="sim-stat-label">Estimated Monthly Reduction</span>
+                    <span id="sim-reduction-val" class="sim-stat-val success-text">-- kg CO₂e</span>
+                  </div>
+                  <div class="sim-stat">
+                    <span class="sim-stat-label">New Projected Total</span>
+                    <span id="sim-new-total-val" class="sim-stat-val">-- kg CO₂e</span>
+                  </div>
+                </div>
+
+                <button id="btn-ask-agent-sim" class="btn btn-outline-primary btn-block">
+                  <i data-lucide="bot"></i>
+                  <span>Ask Agent to Analyze This Scenario</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Recommended Actions Panel -->
+          <div class="card actions-card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Priority Decarbonization Actions</h3>
+                <p class="card-subtitle">Data-driven campus interventions tailored to largest sources</p>
+              </div>
+              <span class="tool-badge">Tool 6 Plan</span>
+            </div>
+            <div id="actions-list" class="actions-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: AI Carbon Agent Interactive Workspace -->
+        <div class="agent-column">
+          <div class="card agent-card">
+            
+            <!-- Agent Header -->
+            <div class="agent-header">
+              <div class="agent-identity">
+                <div class="agent-avatar">
+                  <i data-lucide="bot"></i>
+                </div>
+                <div>
+                  <h2 class="agent-name">Carbon Agent</h2>
+                  <span id="agent-subtext" class="agent-status-label">Autonomous Tool Reasoning Engine</span>
+                </div>
+              </div>
+              <button id="btn-clear-chat" class="btn-icon" title="Clear Chat History">
+                <i data-lucide="rotate-ccw"></i>
+              </button>
+            </div>
+
+            <!-- Agent Chat Message Stream -->
+            <div id="chat-messages" class="chat-stream">
+              <!-- Welcome greeting rendered by JS -->
+            </div>
+
+            <!-- Suggested Quick Prompts -->
+            <div class="prompt-chips-wrapper">
+              <span class="chips-label">Quick Inquiries:</span>
+              <div class="prompt-chips">
+                <button class="chip" data-query="Calculate this month's footprint.">
+                  <i data-lucide="calculator"></i> Calculate this month
+                </button>
+                <button class="chip" data-query="Why did our emissions increase compared to previous month?">
+                  <i data-lucide="help-circle"></i> Why did emissions shift?
+                </button>
+                <button class="chip" data-query="What is our biggest source of emissions?">
+                  <i data-lucide="pie-chart"></i> Biggest source?
+                </button>
+                <button class="chip" data-query="What if electricity consumption decreases by 20%?">
+                  <i data-lucide="sliders"></i> What if electricity -20%?
+                </button>
+                <button class="chip" data-query="Give me a sustainability action plan.">
+                  <i data-lucide="file-check"></i> Reduction action plan
+                </button>
+              </div>
+            </div>
+
+            <!-- Chat Input Bar -->
+            <form id="chat-form" class="chat-input-row">
+              <input
+                type="text"
+                id="chat-input"
+                class="chat-input"
+                placeholder="Ask Carbon Agent (e.g., 'What if we cut car commuting by 25%?')..."
+                autocomplete="off"
+              />
+              <button type="submit" id="btn-send-chat" class="btn btn-primary btn-send">
+                <i data-lucide="send"></i>
+                <span>Ask</span>
+              </button>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Disclaimer Banner -->
+      <footer class="app-footer">
+        <div class="disclaimer-content">
+          <i data-lucide="shield-alert" class="disclaimer-icon"></i>
+          <p id="app-disclaimer">
+            Carbon footprint values are estimates. Actual emissions depend on regional emission factors, data quality, and accounting methodology.
+          </p>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Modal: Enter Monthly Campus Data -->
+  <div id="modal-data-entry" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i data-lucide="database" class="modal-icon"></i>
+          <div>
+            <h3 class="modal-title">Log Monthly Campus Activity Data</h3>
+            <p class="modal-subtitle">Enter operational consumption to compute and save carbon metrics in SQLite.</p>
+          </div>
+        </div>
+        <button id="btn-close-modal" class="btn-icon">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <form id="form-campus-data" class="modal-form">
+        <div class="form-grid">
+          
+          <!-- Month Picker -->
+          <div class="form-group full-col">
+            <label for="input-month">Reporting Month (YYYY-MM) *</label>
+            <input type="month" id="input-month" required class="form-input" />
+          </div>
+
+          <!-- Section: Scope 2 Electricity -->
+          <div class="form-section-title full-col">
+            <i data-lucide="zap"></i> Scope 2: Electricity Consumption
+          </div>
+          <div class="form-group full-col">
+            <label for="input-kwh">Grid Electricity (kWh) *</label>
+            <input type="number" step="any" min="0" id="input-kwh" required class="form-input" placeholder="e.g. 52000" />
+            <span class="input-hint">Factor: 0.385 kg CO₂e/kWh</span>
+          </div>
+
+          <!-- Section: Transportation -->
+          <div class="form-section-title full-col">
+            <i data-lucide="car"></i> Transportation & Commuting
+          </div>
+          <div class="form-group">
+            <label for="input-cars">Commuter Passenger Cars</label>
+            <input type="number" min="0" id="input-cars" class="form-input" placeholder="e.g. 230" />
+          </div>
+          <div class="form-group">
+            <label for="input-car-dist">Avg Commute per Car (km)</label>
+            <input type="number" step="any" min="0" id="input-car-dist" class="form-input" placeholder="e.g. 22.5" />
+          </div>
+          <div class="form-group">
+            <label for="input-motos">Commuter Motorcycles / Scooters</label>
+            <input type="number" min="0" id="input-motos" class="form-input" placeholder="e.g. 35" />
+          </div>
+          <div class="form-group">
+            <label for="input-moto-dist">Avg Distance per Moto (km)</label>
+            <input type="number" step="any" min="0" id="input-moto-dist" class="form-input" placeholder="e.g. 13.0" />
+          </div>
+          <div class="form-group full-col">
+            <label for="input-bus-fuel">Campus Shuttle Diesel Fuel (Liters)</label>
+            <input type="number" step="any" min="0" id="input-bus-fuel" class="form-input" placeholder="e.g. 750" />
+            <span class="input-hint">Factor: 2.68 kg CO₂e/Liter</span>
+          </div>
+
+          <!-- Section: Waste -->
+          <div class="form-section-title full-col">
+            <i data-lucide="trash-2"></i> Campus Solid Waste
+          </div>
+          <div class="form-group">
+            <label for="input-waste-organic">Organic / Food Waste (kg)</label>
+            <input type="number" step="any" min="0" id="input-waste-organic" class="form-input" placeholder="e.g. 2200" />
+          </div>
+          <div class="form-group">
+            <label for="input-waste-plastic">Plastic Waste (kg)</label>
+            <input type="number" step="any" min="0" id="input-waste-plastic" class="form-input" placeholder="e.g. 620" />
+          </div>
+          <div class="form-group full-col">
+            <label for="input-waste-paper">Paper / Cardboard Waste (kg)</label>
+            <input type="number" step="any" min="0" id="input-waste-paper" class="form-input" placeholder="e.g. 910" />
+          </div>
+
+        </div>
+
+        <!-- Real-Time Calculation Preview Box -->
+        <div id="modal-calc-preview" class="calc-preview-card">
+          <div class="preview-header">
+            <span>Instant Deterministic Preview</span>
+            <span id="preview-total" class="preview-total-badge">0.0 kg CO₂e</span>
+          </div>
+          <div class="preview-breakdown">
+            <span>⚡ Electricity: <strong id="preview-elec">0.0</strong> kg</span>
+            <span>🚗 Transport: <strong id="preview-trans">0.0</strong> kg</span>
+            <span>🗑️ Waste: <strong id="preview-waste">0.0</strong> kg</span>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btn-cancel-modal" class="btn btn-secondary">Cancel</button>
+          <button type="submit" id="btn-save-data" class="btn btn-primary">
+            <i data-lucide="save"></i>
+            <span>Calculate & Save to SQLite</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Emission Factors & Methodology Reference -->
+  <div id="modal-factors" class="modal-overlay">
+    <div class="modal-container modal-wide">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i data-lucide="book-open" class="modal-icon"></i>
+          <div>
+            <h3 class="modal-title">Regulatory Emission Factors & Accounting Reference</h3>
+            <p class="modal-subtitle">Official conversion coefficients and authoritative citations.</p>
+          </div>
+        </div>
+        <button id="btn-close-factors" class="btn-icon">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="modal-body-scroll">
+        <div class="table-responsive">
+          <table class="factors-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Scope</th>
+                <th>Factor</th>
+                <th>Unit</th>
+                <th>Authoritative Source</th>
+              </tr>
+            </thead>
+            <tbody id="factors-table-body">
+              <!-- Dynamically populated from backend -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="methodology-note">
+          <h4>Calculation Standard</h4>
+          <p>
+            Emissions are calculated deterministically using the Greenhouse Gas Protocol Corporate Standard guidelines. 
+            No calculations are delegated to the LLM. 
+            All numbers are verified by real Python calculation tools before presentation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+  <script src="/static/js/chat.js"></script>
+  <script src="/static/js/data-entry.js"></script>
+</body>
+</html>

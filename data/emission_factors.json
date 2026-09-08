@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-01-15",
+  "disclaimer": "Carbon footprint values are estimates. Actual emissions depend on regional emission factors, data quality, and accounting methodology.",
+  "factors": {
+    "electricity": {
+      "kwh_factor": 0.385,
+      "unit": "kg CO2e / kWh",
+      "description": "Grid electricity emission factor (regional grid average)",
+      "source": "US EPA eGRID (2024 Summary Tables, Subregion Average)"
+    },
+    "transportation": {
+      "car_km_factor": 0.171,
+      "unit": "kg CO2e / km",
+      "description": "Average passenger gasoline/diesel car commuting factor",
+      "source": "UK DEFRA / EPA Greenhouse Gas Reporting Program (GHGRP)"
+    },
+    "transportation_motorcycle": {
+      "motorcycle_km_factor": 0.103,
+      "unit": "kg CO2e / km",
+      "description": "Average motorcycle / scooter commuting factor",
+      "source": "UK DEFRA GHG Conversion Factors"
+    },
+    "transportation_bus": {
+      "bus_fuel_liter_factor": 2.68,
+      "unit": "kg CO2e / liter",
+      "description": "Diesel fuel consumed by campus shuttles & transit buses",
+      "source": "GHG Protocol Emission Factors from Cross-Sector Tools (Diesel Fuel)"
+    },
+    "waste_organic": {
+      "kg_factor": 0.450,
+      "unit": "kg CO2e / kg",
+      "description": "Organic & food waste sent to municipal landfill (methane generation potential)",
+      "source": "US EPA Waste Reduction Model (WARM v15 - Food Waste)"
+    },
+    "waste_plastic": {
+      "kg_factor": 2.100,
+      "unit": "kg CO2e / kg",
+      "description": "Mixed plastics production and end-of-life disposal impact",
+      "source": "US EPA WARM v15 (Mixed Plastics Lifecycle)"
+    },
+    "waste_paper": {
+      "kg_factor": 0.950,
+      "unit": "kg CO2e / kg",
+      "description": "Office paper and cardboard disposal / landfill decomposition",
+      "source": "US EPA WARM v15 (Mixed Paper / Cardboard)"
+    }
+  }
+}
